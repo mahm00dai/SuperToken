@@ -2,8 +2,8 @@ class Token {
     constructor(tokenSupply = 0) {
         this.tokenSupply = tokenSupply.toFixed(6);
         this.tokenPrice = this.TokenPrice(tokenSupply);
-        this.buyTaxPercentage = 0.05;
-        this.sellTaxPercentage = 0.05;
+        this.buyTaxPercentage = 0.05.toFixed(6);
+        this.sellTaxPercentage = 0.05.toFixed(6);
         this.treasuryBalance = 0.000000;
         this.soldTokens = 0;
         
@@ -46,7 +46,7 @@ class Token {
             for(let i = this.soldTokens + 1; i <= this.soldTokens + qty; i++)
                 buyPrice += i;
 
-            let tax = buyPrice.toFixed(6) * this.buyTaxPercentage.toFixed(6);
+            let tax = buyPrice.toFixed(6) * this.buyTaxPercentage;
             buyPrice += tax;
 
             this.tokenSupply -= qty;
@@ -80,7 +80,7 @@ class Token {
             for(let i = this.soldTokens; i > this.soldTokens - qty; i--)
                 sellPrice += i;
 
-            let tax = sellPrice.toFixed(6) * this.sellTaxPercentage.toFixed(6);
+            let tax = sellPrice.toFixed(6) * this.sellTaxPercentage;
             sellPrice -= tax;
 
             this.tokenSupply += qty;
