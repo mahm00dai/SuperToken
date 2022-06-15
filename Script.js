@@ -1,9 +1,9 @@
 class Token {
-    constructor(tokenSupply = 0) {
+    constructor(tokenSupply = 100000) {
         this.tokenSupply = tokenSupply.toFixed(6);
         this.tokenPrice = this.TokenPrice(tokenSupply);
-        this.buyTaxPercentage = 0.05.toFixed(6);
-        this.sellTaxPercentage = 0.05.toFixed(6);
+        this.buyTaxPercentage = 1.5.toFixed(6);
+        this.sellTaxPercentage = 2.0.toFixed(6);
         this.treasuryBalance = 0.000000;
         this.soldTokens = 0;
         
@@ -18,19 +18,24 @@ class Token {
 
     TokenPrice (tokenSupply)  {
         //returns Token Price for a given Token Supply. 
+        this.tokenPrice = 0;
         this.tokenSupply = tokenSupply.toFixed(6);
 
-        // Linear Function ( Y = 2X + 10)
-        this.x = this.tokenSupply;
-        this.y = this.x;
+        // Following the Linear Function ( Y = X) to find the Total TokenPrice
+        for(let i = 1; i <= this.tokenSupply; i++)
+            this.tokenPrice += i;
+
+        // this.x = this.tokenSupply;
+        // this.y = this.x;
         
-        console.log("\n");
-        console.log("X 'TokenSupply' : ", this.x);
-        console.log("Y 'TokenPrice' : ", this.y);
+        // console.log("\n");
+        // console.log("X 'TokenSupply' : ", this.x);
+        // console.log("Y 'TokenPrice' : ", this.y);
         
 
-        this.tokenPrice = (this.y / this.x).toFixed(6);
-        console.log("Price per Token = ", this.tokenPrice);
+        // this.tokenPrice = (this.y / this.x).toFixed(6);
+        // console.log("Price per Token = ", this.tokenPrice);
+        console.log("Total Token Price = ", this.tokenPrice);
         console.log("\n");
 
         return(this.tokenPrice);
@@ -51,8 +56,7 @@ class Token {
 
             this.tokenSupply -= qty;
             this.soldTokens += qty;
-            // this.treasuryBalance += tax;
-            this.treasuryBalance += buyPrice;
+            this.treasuryBalance += tax;
 
             console.log("\n");
             console.log("SoldTokens = ", this.soldTokens.toFixed(6));
@@ -85,8 +89,7 @@ class Token {
 
             this.tokenSupply += qty;
             this.soldTokens -= qty;
-            // this.treasuryBalance += tax;
-            this.treasuryBalance -= sellPrice;
+            this.treasuryBalance += tax;
             
             console.log("\n");
             console.log("SoldTokens = ", this.soldTokens.toFixed(6));
@@ -103,28 +106,39 @@ class Token {
     };
 }
 
+let t0,t1;
 
+t0= performance.now(); //start time
 var T = new Token();
+t1= performance.now(); //end time
+console.log('Execution time:'+ (t1-t0) +' milliseconds');
 
-T.TokenPrice(100000);
 
+t0= performance.now(); //start time
+T.TokenPrice(3);
+t1= performance.now(); //end time
+console.log('Execution time:'+ (t1-t0) +' milliseconds');
+
+
+t0= performance.now(); //start time
 T.Buy(10);
+t1= performance.now(); //end time
+console.log('Execution time:'+ (t1-t0) +' milliseconds');
 
+
+t0= performance.now(); //start time
 T.Buy(1124.389299);
+t1= performance.now(); //end time
+console.log('Execution time:'+ (t1-t0) +' milliseconds');
 
+
+t0= performance.now(); //start time
 T.Sell(123);
+t1= performance.now(); //end time
+console.log('Execution time:'+ (t1-t0) +' milliseconds');
 
+
+t0= performance.now(); //start time
 T.Sell(369.329332);
-
-
-
-
-
-
-
-//        Test Cases        //
-// ------------------------//
-
-// T.Buy(10);
-// T.Sell(10);
-// T.Sell(10);
+t1= performance.now(); //end time
+console.log('Execution time:'+ (t1-t0) +' milliseconds');
